@@ -8,11 +8,25 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.service.autofill.OnClickAction;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Random;
+import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TextView num;
+    int secret = new Random().nextInt(10)+1;
+    private ImageView IV;
+    private Button IS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,15 +34,51 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        num = findViewById(R.id.number);
+        Log.d(" Number","secret number :"+secret);
+        IS = findViewById(R.id.Insert);
+
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                 int guess = Integer.parseInt(num.getText().toString());
+                   if (secret==guess){
+                       Toast.makeText(MainActivity.this,"Good Job!",Toast.LENGTH_LONG).show();
+                       IV.setImageResource(R.drawable.smile);
+                       IV.setVisibility(View.VISIBLE);
+
+                   }else if(secret<=guess){
+                       Toast.makeText(MainActivity.this,"smaller",Toast.LENGTH_LONG).show();
+                   }else if(secret>=guess){
+                       Toast.makeText(MainActivity.this,"Bigger",Toast.LENGTH_LONG).show();
+                   }else if(secret!=guess){
+                       Toast.makeText(MainActivity.this,"Come on you can do it!",Toast.LENGTH_LONG).show();
+                       IV.setImageResource(R.drawable.rockhand);
+
+                   }
+
             }
+
         });
+    }
+    public void gg(View view){
+        int guess = Integer.parseInt(num.getText().toString());
+        if (secret==guess){
+            Toast.makeText(MainActivity.this,"Good Job!",Toast.LENGTH_LONG).show();
+   /*         IV.setImageResource(R.drawable.smile);
+            IV.setVisibility(View.VISIBLE);*/
+        }else if(secret<=guess){
+            Toast.makeText(MainActivity.this,"smaller",Toast.LENGTH_LONG).show();
+        }else if(secret>=guess){
+            Toast.makeText(MainActivity.this,"Bigger",Toast.LENGTH_LONG).show();
+        }else if (secret!=guess){
+            Toast.makeText(MainActivity.this,"Come on you can do it!",Toast.LENGTH_LONG).show();
+            IV.setImageResource(R.drawable.rockhand);
+
+        }
     }
 
     @Override
