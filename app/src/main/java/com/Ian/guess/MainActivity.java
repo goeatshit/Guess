@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -26,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView num;
     int secret = new Random().nextInt(10)+1;
     private ImageView IV;
-    private Button IS;
+    int counter ;
+    private TextView cc;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,48 +39,100 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         num = findViewById(R.id.number);
         Log.d(" Number","secret number :"+secret);
-        IS = findViewById(R.id.Insert);
-
-
-
+        IV = findViewById(R.id.smile);
         FloatingActionButton fab = findViewById(R.id.fab);
+        cc = findViewById(R.id.count);
+        int counter = Integer.parseInt(cc.getText().toString());
+        counter++;
+
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+              int counter = Integer.parseInt(cc.getText().toString());
+              counter++;
+              cc.setText(String.valueOf(counter));
+                try{
                  int guess = Integer.parseInt(num.getText().toString());
                    if (secret==guess){
-                       Toast.makeText(MainActivity.this,"Good Job!",Toast.LENGTH_LONG).show();
-                       IV.setImageResource(R.drawable.smile);
+                       new AlertDialog.Builder(MainActivity.this)
+                               .setTitle("You got a message")
+                               .setMessage("You are a genius!")
+                               .setPositiveButton("OK",null)
+                               .show();
                        IV.setVisibility(View.VISIBLE);
-
+                       IV.setImageResource(R.drawable.smile);
+                       counter = 0;
+                       cc.setText(String.valueOf(counter));
+                       secret = new Random().nextInt(10)+1;
+                       Log.d("Number", "secret number: "+ secret);
+                  //     Toast.makeText(MainActivity.this,"Good Job!",Toast.LENGTH_LONG).show();
                    }else if(secret<=guess){
-                       Toast.makeText(MainActivity.this,"smaller",Toast.LENGTH_LONG).show();
-                   }else if(secret>=guess){
-                       Toast.makeText(MainActivity.this,"Bigger",Toast.LENGTH_LONG).show();
-                   }else if(secret!=guess){
-                       Toast.makeText(MainActivity.this,"Come on you can do it!",Toast.LENGTH_LONG).show();
-                       IV.setImageResource(R.drawable.rockhand);
-
+                       new AlertDialog.Builder(MainActivity.this)
+                               .setTitle("You got a message")
+                               .setMessage("smaller")
+                               .setPositiveButton("OK",null)
+                               .show();
+                       IV.setVisibility(View.GONE);
+                 //      Toast.makeText(MainActivity.this,"smaller",Toast.LENGTH_LONG).show();
+                   }else if(secret>=guess) {
+                       new AlertDialog.Builder(MainActivity.this)
+                               .setTitle("You got a message")
+                               .setMessage("Bigger")
+                               .setPositiveButton("OK",null)
+                               .show();
+                       IV.setVisibility(View.GONE);
+                  //     Toast.makeText(MainActivity.this, "Bigger", Toast.LENGTH_LONG).show();
                    }
-
+                   }catch (Exception E){
+                  //      Toast.makeText(MainActivity.this,"You moron",Toast.LENGTH_LONG).show();
+                    }
             }
 
+
         });
+
     }
+
     public void gg(View view){
+        int counter = Integer.parseInt(cc.getText().toString());
+        counter++;
+        cc.setText(String.valueOf(counter));
+        try{
         int guess = Integer.parseInt(num.getText().toString());
         if (secret==guess){
-            Toast.makeText(MainActivity.this,"Good Job!",Toast.LENGTH_LONG).show();
-   /*         IV.setImageResource(R.drawable.smile);
-            IV.setVisibility(View.VISIBLE);*/
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("You got a message")
+                    .setMessage("You are a genius!")
+                    .setPositiveButton("OK",null)
+                    .show();
+            counter = 0;
+            cc.setText(String.valueOf(counter));
+            secret = new Random().nextInt(10)+1;
+            Log.d("Number", "secret number: "+ secret);
+      //      Toast.makeText(MainActivity.this,"Good Job!",Toast.LENGTH_LONG).show();
+            IV.setImageResource(R.drawable.smile);
+            IV.setVisibility(View.VISIBLE);
         }else if(secret<=guess){
-            Toast.makeText(MainActivity.this,"smaller",Toast.LENGTH_LONG).show();
-        }else if(secret>=guess){
-            Toast.makeText(MainActivity.this,"Bigger",Toast.LENGTH_LONG).show();
-        }else if (secret!=guess){
-            Toast.makeText(MainActivity.this,"Come on you can do it!",Toast.LENGTH_LONG).show();
-            IV.setImageResource(R.drawable.rockhand);
-
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("You got a message")
+                    .setMessage("smaller")
+                    .setPositiveButton("OK",null)
+                    .show();
+            IV.setVisibility(View.GONE);
+      //      Toast.makeText(MainActivity.this,"smaller",Toast.LENGTH_LONG).show();
+        }else if(secret>=guess) {
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("You got a message")
+                    .setMessage("Bigger")
+                    .setPositiveButton("OK", null)
+                    .show();
+            IV.setVisibility(View.GONE);
+            //      Toast.makeText(MainActivity.this,"Bigger",Toast.LENGTH_LONG).show();
+        }
+        }catch (Exception E){
+      //      Toast.makeText(MainActivity.this,"You moron",Toast.LENGTH_LONG).show();
         }
     }
 
